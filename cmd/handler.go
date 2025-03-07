@@ -12,11 +12,14 @@ import (
 )
 
 func (app *application) handleGetTasks(c *fiber.Ctx) error {
+	// Get tasks from database
 	tasks, err := app.queries.GetTasks(c.Context())
 	if err != nil {
 		log.Println("Error getting tasks:", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
+
+	// If no tasks exist, return representation of an empty JSON array
 	if len(tasks) == 0 {
 		return c.SendString("[]")
 	}
@@ -24,11 +27,13 @@ func (app *application) handleGetTasks(c *fiber.Ctx) error {
 }
 
 func (app *application) handleDeleteTasks(c *fiber.Ctx) error {
+	// Get task ID from path
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString("Invalid task ID")
 	}
 
+	// Delete task from database
 	err = app.queries.DeleteTask(c.Context(), int32(id))
 	if err != nil {
 		log.Println("Error deleting task:", err)
