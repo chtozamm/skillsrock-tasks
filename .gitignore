@@ -1,0 +1,6 @@
+.env
+/tmp
+
+# Air live reload
+.air.conf
+application

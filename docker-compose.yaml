@@ -1,0 +1,35 @@
+name: "skillsrock-tasks"
+
+services:
+  tasks-server:
+    build:
+      context: .
+    image: tasks-server:latest
+    container_name: tasks-server
+    environment:
+      - DB_URL=postgres://skillsrock:secret@postgres:5432/tasks
+    ports:
+      - 8080:8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres
+    container_name: tasks-postgres
+    environment:
+      POSTGRES_USER: skillsrock
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: tasks
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skillsrock -d tasks"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
