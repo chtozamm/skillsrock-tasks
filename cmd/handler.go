@@ -67,7 +67,7 @@ func (app *application) handleCreateTasks(c *fiber.Ctx) error {
 	}
 
 	// Respond with created task
-	return c.JSON(createdTask)
+	return c.Status(fiber.StatusCreated).JSON(createdTask)
 }
 
 func (app *application) handleUpdateTasks(c *fiber.Ctx) error {
@@ -123,7 +123,6 @@ func (app *application) handleUpdateTasks(c *fiber.Ctx) error {
 
 	// Update task in database
 	updatedTask, err := app.queries.UpdateTask(c.Context(), updateTaskParams)
-
 	if err != nil {
 		log.Println("Error updating task:", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
