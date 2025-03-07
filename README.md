@@ -9,7 +9,8 @@
 - Изменение задач
 - Удаление задач
 
-Полный обзор API можно найти [здесь](docs/api-overview.md).
+> [!TIP]
+> Полный обзор API можно найти [здесь](docs/api-overview.md).
 
 ## Особенности
 
@@ -64,9 +65,11 @@ docker compose up -d
 goose postgres -dir sql/schema postgres://skillsrock:secret@localhost:5432/tasks up
 ```
 
-### Создание новой задачи
+## Примеры использования
 
-Создайте новую задачу:
+Ниже приведены примеры взимодействия с сервером. Полный обзор API можно найти [здесь](docs/api-overview.md).
+
+### Создание новой задачи
 
 ```bash
 curl http://localhost:8080/tasks -X POST \
@@ -74,9 +77,7 @@ curl http://localhost:8080/tasks -X POST \
 	-d '{"title": "Тестовое задание", "description": "Выполнить тестовое задание для компании SkillsRock", "status": "in_progress"}'
 ```
 
-### Изменение задачи
-
-Измените статус выполнения задачи
+### Изменение статуса задачи
 
 ```bash
 task_id=1
